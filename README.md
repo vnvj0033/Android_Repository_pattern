@@ -2,6 +2,7 @@ DevByteRepository - Solution Code
 ==================================
 
 Solution code for the Repository codelab.
+https://developer.android.com/codelabs/basic-android-kotlin-training-repository-pattern
 
 Introduction
 ------------
