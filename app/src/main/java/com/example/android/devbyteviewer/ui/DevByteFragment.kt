@@ -50,8 +50,7 @@ class DevByteFragment : Fragment() {
         val activity = requireNotNull(this.activity) {
             "You can only access the viewModel after onActivityCreated()"
         }
-        ViewModelProvider(this, DevByteViewModel.Factory(activity.application))
-                .get(DevByteViewModel::class.java)
+        ViewModelProvider(this, DevByteViewModel.Factory(activity.application))[DevByteViewModel::class.java]
     }
 
     /**
@@ -67,11 +66,11 @@ class DevByteFragment : Fragment() {
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.playlist.observe(viewLifecycleOwner, Observer<List<DevByteVideo>> { videos ->
+        viewModel.playlist.observe(viewLifecycleOwner) { videos ->
             videos?.apply {
                 viewModelAdapter?.videos = videos
             }
-        })
+        }
     }
 
     /**
@@ -91,7 +90,7 @@ class DevByteFragment : Fragment() {
      * @return Return the View for the fragment's UI.
      */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
         val binding: FragmentDevByteBinding = DataBindingUtil.inflate(
                 inflater,
                 R.layout.fragment_dev_byte,
@@ -126,9 +125,9 @@ class DevByteFragment : Fragment() {
 
 
         // Observer for the network error.
-        viewModel.eventNetworkError.observe(viewLifecycleOwner, Observer<Boolean> { isNetworkError ->
+        viewModel.eventNetworkError.observe(viewLifecycleOwner) { isNetworkError ->
             if (isNetworkError) onNetworkError()
-        })
+        }
 
         return binding.root
     }
